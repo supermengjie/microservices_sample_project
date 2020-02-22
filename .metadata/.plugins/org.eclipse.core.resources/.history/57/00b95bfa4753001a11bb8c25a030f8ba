@@ -1,0 +1,34 @@
+package com.infosys.equipment.dto;
+
+public class EquipmentDTO {
+	private int id;
+	private String name;
+	private int customerID;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getCustomerID() {
+		return customerId;
+	}
+	public void setCustomerID(int customerID) {
+		this.customerId = customerID;
+	}
+	@Override
+	public String toString() {
+		return "EquipmentDTO [Id=" + id + ", name=" + name + ", customerID=" + customerId + "]";
+	}
+
+	
+
+	
+}

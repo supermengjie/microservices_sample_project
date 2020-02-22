@@ -1,0 +1,15 @@
+package com.infosys.equipment.service;
+
+import java.util.List;
+
+import com.infosys.equipment.dto.CustomerDTO;
+
+public interface CustomerService {
+
+	String save(CustomerDTO customer);
+
+	List<CustomerDTO> findCustomer();
+
+	CustomerDTO findCustomerById(int id);
+
+}

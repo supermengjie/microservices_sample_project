@@ -1,0 +1,99 @@
+package com.infosys.customer_service.controller;
+
+import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infosys.cutomer_service.controller.CustomerController;
+import com.infosys.cutomer_service.dto.CustomerDTO;
+import com.infosys.cutomer_service.exceptionHandler.CustomerNotFoundException;
+
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(CustomerController.class)
+public class CustomerControllerTest {
+	
+	private static final ObjectMapper om = new ObjectMapper();
+	
+	@Autowired
+	private MockMvc mvc;
+	
+	@MockBean
+	private CustomerController customerController;
+	
+	@Test
+	public void getCustomer() throws Exception{
+		 //CustomerController customerController = mock(CustomerController.class);
+		CustomerDTO customer1= new CustomerDTO();
+		customer1.setId(1);
+		customer1.setName("james");
+		List<CustomerDTO> all =  Collections.singletonList(customer1);
+		given(customerController.getAllCustomer()).willReturn(new ResponseEntity<>(all, HttpStatus.OK));		//given(customerController.getAllCustomer()).willReturn(all);
+		mvc.perform(get("/customers/"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$[0].name", is(customer1.getName())))
+		.andExpect(jsonPath("$[0].id", is(customer1.getId())));
+		
+	}
+	
+	@Test
+	public void getCustomerById() throws Exception{
+		 //CustomerController customerController = mock(CustomerController.class);
+		CustomerDTO customer1= new CustomerDTO();
+		customer1.setId(1);
+		customer1.setName("james");
+		given(customerController.getCustomer(customer1.getId())).willReturn(new ResponseEntity<>(customer1,HttpStatus.OK));		//given(customerController.getAllCustomer()).willReturn(all);
+		mvc.perform(get("/customers/"+customer1.getId()))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("name", is(customer1.getName())))
+		.andExpect(jsonPath("id", is(customer1.getId())));
+		
+	}
+	
+	@Test
+	public void getCustomerById_noFound() throws Exception{
+		given(customerController.getCustomer(20)).willThrow(new CustomerNotFoundException(20));
+		mvc.perform(get("/customers/20"))
+		.andExpect((status().isNotFound()));
+		
+		
+	}
+	
+	/*
+	@Test
+	public void addCusotmer() throws Exception{
+		CustomerDTO customer1= new CustomerDTO();
+		customer1.setId(1);
+		customer1.setName("james");
+		given(customerController.addCustomer((@Valid CustomerDTO) any(CustomerDTO.class))).willReturn(new ResponseEntity<Object> (HttpStatus.CREATED));
+		mvc.perform(post("customers")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(om.writeValueAsString(customer1)))
+				.andExpect(status().isCreated());
+	}
+
+	*/
+	
+
+}

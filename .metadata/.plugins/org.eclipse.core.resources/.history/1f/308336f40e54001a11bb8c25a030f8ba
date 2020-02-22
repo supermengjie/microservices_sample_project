@@ -1,0 +1,61 @@
+package com.infosys.equipment.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.infosys.equipment.dao.EquipmentDao;
+import com.infosys.equipment.dto.EquipmentDTO;
+import com.infosys.equipment.entity.EquipmentEntity;
+
+@Service
+public class EquipmentServiceImpl implements EquipmentService{
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	EquipmentDao equipmentDao;
+	
+	@Override
+	public String save(EquipmentDTO equipment) {
+		logger.info("Creation request for equipment {}", equipment);
+		EquipmentEntity equipmentEntity= new EquipmentEntity();
+		BeanUtils.copyProperties(equipment, equipmentEntity);
+		equipmentDao.save(equipmentEntity);
+		return "";
+		
+	}
+	
+	@Override
+	public List<EquipmentDTO> findEquipmentByCustomerId(int customerId) {
+		logger.info("Equipment request for customerId {}", customerId);
+		List<EquipmentEntity> allEquipments = equipmentDao.findByCustomerId(customerId);
+		List<EquipmentDTO>  lEquipments= new ArrayList<>();
+		for(EquipmentEntity ce: allEquipments) {
+			EquipmentDTO c = new EquipmentDTO();
+			BeanUtils.copyProperties(ce, c);
+			lEquipments.add(c);
+		}
+		return lEquipments;
+	}
+	
+	
+	@Override
+	public List<EquipmentDTO> findEquipment() {
+		Iterable<EquipmentEntity> allEquipments=equipmentDao.findAll();
+		List<EquipmentDTO>  lEquipments= new ArrayList<>();
+		for(EquipmentEntity ce: allEquipments) {
+			EquipmentDTO c = new EquipmentDTO();
+			BeanUtils.copyProperties(ce, c);
+			lEquipments.add(c);
+		}
+		
+		return lEquipments;
+		
+	}
+}

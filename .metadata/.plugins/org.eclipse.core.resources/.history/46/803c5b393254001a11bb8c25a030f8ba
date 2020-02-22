@@ -1,0 +1,8 @@
+package com.example.demo.controller;
+
+
+@RunWith(SpringRunner.class)
+@WebMvcTest
+public class EquipmentControllerTest {
+
+}

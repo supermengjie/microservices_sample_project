@@ -1,0 +1,41 @@
+package com.infosys.cutomer_service.exceptionHandler;
+
+import java.util.Date;
+
+public class ExceptionResponse {
+	private int httpStatus;
+	  private Date timestamp;
+	  private String message;
+	  private String details;
+
+	  public ExceptionResponse(int httpStatus, Date timestamp, String message, String details) {
+	    super();
+	    this.setHttpStatus(httpStatus);
+	    this.timestamp = timestamp;
+	    this.message = message;
+	    this.details = details;
+	  }
+
+	  public Date getTimestamp() {
+	    return timestamp;
+	  }
+
+	  public String getMessage() {
+	    return message;
+	  }
+
+	  public String getDetails() {
+	    return details;
+	  }
+
+	public int getHttpStatus() {
+		return httpStatus;
+	}
+
+	public void setHttpStatus(int httpStatus) {
+		this.httpStatus = httpStatus;
+	}
+
+
+
+	}

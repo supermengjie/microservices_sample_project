@@ -1,0 +1,42 @@
+package com.infosys.customer_service.controller;
+
+import static org.hamcrest.core.Is.is;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.infosys.cutomer_service.controller.CustomerController;
+import com.infosys.cutomer_service.dto.CustomerDTO;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+public class CustomerControllerTest {
+	@Autowired
+	private MockMvc mvc;
+	
+	@MockBean
+	private CustomerController customerController;
+	
+	@Test
+	public void getCustomerswithId() throws Exception{
+		CustomerDTO customer1= new CustomerDTO();
+		customer1.setId(1);
+		customer1.setName("james");
+		System.out.println(customer1.getId())
+		given(customerController.getCustomer(customer1.getId())).willReturn(customer1);
+		mvc.perform(get("/customers/"+customer1.getId()))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("name", is(customer1.getName())))
+		.andExpect(jsonPath("Id", is(customer1.getId())));
+		
+	}
+
+}

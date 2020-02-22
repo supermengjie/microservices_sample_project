@@ -1,0 +1,55 @@
+package com.infosys.equipment.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.infosys.cutomer_service.dao.CustomerDao;
+import com.infosys.cutomer_service.dto.CustomerDTO;
+import com.infosys.equipment.entity.CustomerEntity;
+
+@Service
+public class CustomerServiceImpl implements CustomerService{
+	@Autowired
+	CustomerDao customerDao;
+	
+	@Override
+	public String save(CustomerDTO customer) {
+		CustomerEntity customerEntity= new CustomerEntity();
+		BeanUtils.copyProperties(customer, customerEntity);
+		customerDao.save(customerEntity);
+		return "";
+		
+	}
+	
+	@Override
+	public CustomerDTO findCustomerById(int id) {
+		Optional<CustomerEntity> optionalCE= customerDao.findById(id);
+		if(optionalCE.isPresent()) {
+			CustomerEntity ce = optionalCE.get();
+			CustomerDTO c= new CustomerDTO();
+			BeanUtils.copyProperties(ce, c);
+			return c;
+		}else {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<CustomerDTO> findCustomer() {
+		Iterable<CustomerEntity> allCustomers=customerDao.findAll();
+		List<CustomerDTO>  lCustomers= new ArrayList<>();
+		for(CustomerEntity ce: allCustomers) {
+			CustomerDTO c = new CustomerDTO();
+			BeanUtils.copyProperties(ce, c);
+			lCustomers.add(c);
+		}
+		
+		return lCustomers;
+		
+	}
+}

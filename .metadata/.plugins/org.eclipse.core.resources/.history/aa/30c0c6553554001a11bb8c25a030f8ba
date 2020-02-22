@@ -1,0 +1,66 @@
+package com.example.demo.controller;
+
+import static org.mockito.BDDMockito.given;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.infosys.equipment.controller.EquipmentController;
+import com.infosys.equipment.dto.EquipmentDTO;
+import com.infosys.equipment.service.EquipmentService;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = EquipmentController.class)
+public class EquipmentControllerTest {
+	
+	@Autowired
+	MockMvc mvc;
+	
+	@MockBean
+	private EquipmentService equipmentService;
+	
+	@InjectMocks
+	EquipmentController equipmentController;
+	
+	private EquipmentDTO equipment1;
+	private EquipmentDTO equipment2;
+	
+	public void equipment1() {
+		equipment1= new EquipmentDTO();
+		equipment1.setCustomerID(1);
+		equipment1.setName("Book");
+	}
+	
+	public void equipment2() {
+		equipment2= new EquipmentDTO();
+		equipment2.setCustomerID(1);
+		equipment2.setName("Phone");
+	}
+	
+	@Before
+	public void setUp() {
+		equipment1();
+		equipment2();
+	}
+	 @Test
+	 public void getAllequipment() {
+		 EquipmentDTO equipment = new EquipmentDTO();
+		 equipment.setCustomerID(1);
+		 equipment.setName("book");
+		 List<EquipmentDTO> all = new ArrayList<>();
+		 all.add(equipment);
+		 given(equipmentController.getAllequipment()).willReturn(all);
+		 
+	 }
+	
+}

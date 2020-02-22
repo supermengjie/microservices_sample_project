@@ -1,0 +1,4 @@
+spring.application.name=customerService
+server.port=8088
+
+

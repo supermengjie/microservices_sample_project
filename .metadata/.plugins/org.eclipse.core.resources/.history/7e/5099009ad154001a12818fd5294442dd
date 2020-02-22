@@ -1,0 +1,2 @@
+spring.application.name=customerService
+spring.cloud.config.uri=http://localhost:8091

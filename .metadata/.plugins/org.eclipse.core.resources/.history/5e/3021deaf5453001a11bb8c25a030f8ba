@@ -1,0 +1,9 @@
+package com.infosys.profile.dto;
+
+public class ProfileDTO {
+	String name;
+	String address;
+	String Id;
+	List<String> equipment;
+
+}

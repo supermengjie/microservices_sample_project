@@ -1,0 +1,56 @@
+package com.infosys.equipment.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.infosys.equipment.dao.EquipmentDao;
+import com.infosys.equipment.dto.EquipmentDTO;
+import com.infosys.equipment.dto.EquipmentDTO;
+import com.infosys.equipment.entity.EquipmentEntity;
+
+@Service
+public class EquipmentServiceImpl implements EquipmentService{
+	@Autowired
+	EquipmentDao equipmentDao;
+	
+	@Override
+	public String save(EquipmentDTO Equipment) {
+		EquipmentEntity EquipmentEntity= new EquipmentEntity();
+		BeanUtils.copyProperties(Equipment, EquipmentEntity);
+		EquipmentDao.save(EquipmentEntity);
+		return "";
+		
+	}
+	
+	@Override
+	public EquipmentDTO findEquipmentById(int id) {
+		Optional<EquipmentEntity> optionalCE= EquipmentDao.findById(id);
+		if(optionalCE.isPresent()) {
+			EquipmentEntity ce = optionalCE.get();
+			EquipmentDTO c= new EquipmentDTO();
+			BeanUtils.copyProperties(ce, c);
+			return c;
+		}else {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<EquipmentDTO> findEquipment() {
+		Iterable<EquipmentEntity> allEquipments=EquipmentDao.findAll();
+		List<EquipmentDTO>  lEquipments= new ArrayList<>();
+		for(EquipmentEntity ce: allEquipments) {
+			EquipmentDTO c = new EquipmentDTO();
+			BeanUtils.copyProperties(ce, c);
+			lEquipments.add(c);
+		}
+		
+		return lEquipments;
+		
+	}
+}

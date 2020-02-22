@@ -1,0 +1,9 @@
+package com.infosys.equipment.dao;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.infosys.equipment.entity.EquipmentEntity;
+
+public interface EquipmentDao extends CrudRepository<EquipmentEntity, Integer> {
+	
+}

@@ -1,0 +1,2 @@
+spring.application.name=ProfileService
+server.port=8082

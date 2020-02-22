@@ -1,0 +1,7 @@
+
+server.port=8088
+info.app.name=Customer Service Application
+info.app.description=this is a sample project
+info.app.version=1.0.0
+
+

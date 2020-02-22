@@ -1,0 +1,19 @@
+package com.infosys.profile.exceptionHandler;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ProfileNotFoundException extends RuntimeException{
+
+	public ProfileNotFoundException(int id) {
+		// TODO Auto-generated constructor stub
+		super("Profile with "+id+" not found");
+	}	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+}
