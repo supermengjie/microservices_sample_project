@@ -22,6 +22,7 @@ import com.infosys.profile.dto.CustomerDTO;
 import com.infosys.profile.dto.EquipmentDTO;
 import com.infosys.profile.dto.ProfileDTO;
 import com.infosys.profile.exceptionHandler.ProfileNotFoundException;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("profile")
@@ -32,6 +33,7 @@ public class Profile_Controller {
 	DiscoveryClient discoveryClient;
 	
 	
+	@HystrixCommand(fallbackMethod = "getProfileFallback")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProfileDTO> getProfile(@PathVariable int id) {
 		logger.info("Profile request for customer Id {}", id);
@@ -56,6 +58,10 @@ public class Profile_Controller {
 		profile.setEquipment(responseBody.getBody());
 		logger.info("Profile for customerId{} : {}", id, profile);
 		return new ResponseEntity<>(profile, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<ProfileDTO> getProfileFallback(@PathVariable int id) {
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 
 }

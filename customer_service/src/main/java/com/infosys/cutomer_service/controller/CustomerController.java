@@ -22,6 +22,7 @@ import com.infosys.cutomer_service.dto.CustomerDTO;
 import com.infosys.cutomer_service.exceptionHandler.CustomerAlreadyExistException;
 import com.infosys.cutomer_service.exceptionHandler.CustomerNotFoundException;
 import com.infosys.cutomer_service.service.CustomerService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("customers")
@@ -52,6 +53,7 @@ public class CustomerController {
 		return new ResponseEntity<CustomerDTO>(customer, HttpStatus.OK);
 	}
 	
+	@HystrixCommand(fallbackMethod = "addCustomerFallback")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> addCustomer(@Valid @RequestBody CustomerDTO customer) {
 		logger.info("Creating Customers for customer{}", customer);
@@ -60,6 +62,11 @@ public class CustomerController {
 		}
 		customerService.save(customer);
 		return new ResponseEntity<>(null, HttpStatus.CREATED);
+	}
+	
+	public ResponseEntity<Object> addCustomerFallback(@Valid @RequestBody CustomerDTO customer) {
+		logger.info("fallback for creating customers triggered");
+		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 	}
 
 }
