@@ -1,7 +1,0 @@
-package com.infosys.cutomer_service.exceptionHandler;
-
-
-@ResponseStatus(HttpStatus.NOT_FOU)
-public class CustomerNotFoundException extends RuntimeException{
-	
-}

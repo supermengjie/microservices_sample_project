@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 public class CustomerController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	//private final Logger logger = LogManager.getLogger(CustomerController.class.getName());
+	
 	
 	@Autowired
 	CustomerService customerService;
@@ -44,7 +47,7 @@ public class CustomerController {
 	
 	@GetMapping(value="/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CustomerDTO> getCustomer(@PathVariable int id) {
-		logger.info("Customers request for custumerId {}", id);
+		logger.info("Customers request for custumerId "+id);
 		CustomerDTO customer = customerService.findCustomerById(id);
 		if(customer == null) {
 			logger.error("Customer with id {} not foud, an exception is thrown");
@@ -56,7 +59,7 @@ public class CustomerController {
 	@HystrixCommand(fallbackMethod = "addCustomerFallback")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> addCustomer(@Valid @RequestBody CustomerDTO customer) {
-		logger.info("Creating Customers for customer{}", customer);
+		logger.info("Creating Customers for customer: "+ customer);
 		if(customerService.findCustomerById(customer.getId())!=null) {
 			throw new CustomerAlreadyExistException(customer.getId());
 		}

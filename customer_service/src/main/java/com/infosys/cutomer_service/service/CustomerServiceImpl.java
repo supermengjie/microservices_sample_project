@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Override
 	public String save(CustomerDTO customer) {
-		logger.info("Creation request for customer {}", customer);
+		logger.info("Creation request for customer: "+customer);
 		CustomerEntity customerEntity= new CustomerEntity();
 		BeanUtils.copyProperties(customer, customerEntity);
 		customerDao.save(customerEntity);
@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Override
 	public CustomerDTO findCustomerById(int id) {
-		logger.info("customersInfo request for customer {}", id);
+		logger.info("customersInfo request for customer "+ id);
 		Optional<CustomerEntity> optionalCE= customerDao.findById(id);
 		CustomerDTO c=null;
 		if(optionalCE.isPresent()) {
@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService{
 			BeanUtils.copyProperties(ce, c);
 			
 		}
-		logger.info("customersInfo for customer {}", c );
+		logger.info("customersInfo for customer:v"+c );
 		return c;
 	}
 	
@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService{
 			BeanUtils.copyProperties(ce, c);
 			lCustomers.add(c);
 		}
-		logger.info("customersInfo for all customer {}", lCustomers );
+		logger.info("customersInfo for all customer : "+ lCustomers );
 		return lCustomers;
 		
 	}

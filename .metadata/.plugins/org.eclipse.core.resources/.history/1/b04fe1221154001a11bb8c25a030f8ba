@@ -1,4 +1,0 @@
-package com.infosys.cutomer_service.exceptionHandler;
-public class ExceptionHandler extends ResponseEntityExceptionHandler{
-
-}
