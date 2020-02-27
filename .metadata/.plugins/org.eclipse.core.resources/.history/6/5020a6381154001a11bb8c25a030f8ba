@@ -1,8 +1,0 @@
-package com.infosys.cutomer_service.exceptionHandler;
-
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-@ContollerAdvice
-public class ExceptionHandler extends ResponseEntityExceptionHandler{
-
-}

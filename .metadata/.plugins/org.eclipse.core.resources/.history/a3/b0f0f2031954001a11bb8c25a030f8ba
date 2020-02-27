@@ -1,6 +1,0 @@
-package com.infosys.cutomer_service.exceptionHandler;
-
-
-public class CustomerNotFoundException extends RuntimeException{
-	
-}

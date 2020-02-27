@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="CustomerControllerTest (2)" project="customer_service_2" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="com.infosys.customer_service.controller.CustomerControllerTest" time="0.177">
-    <testcase name="getCustomerById" classname="com.infosys.customer_service.controller.CustomerControllerTest" time="0.141"/>
-    <testcase name="getCustomer" classname="com.infosys.customer_service.controller.CustomerControllerTest" time="0.01"/>
-    <testcase name="getCustomerById_noFound" classname="com.infosys.customer_service.controller.CustomerControllerTest" time="0.026"/>
-  </testsuite>
-</testrun>
