@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService{
 			BeanUtils.copyProperties(ce, c);
 			
 		}
-		logger.info("customersInfo for customer:v"+c );
+		logger.info("customersInfo for customer:"+c );
 		return c;
 	}
 	
